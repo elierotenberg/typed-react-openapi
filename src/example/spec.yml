@@ -1,0 +1,146 @@
+openapi: "3.0.0"
+servers:
+  - url: http://localhost:8080
+
+paths:
+  /auth:
+    post:
+      operationId: postAuth
+      tags:
+        - TodoList
+      summary: Get a bearer token
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /item:
+    get:
+      operationId: getItems
+      security:
+        - bearerToken: []
+      tags:
+        - TodoList
+      summary: List all items
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+    post:
+      operationId: postItem
+      security:
+        - bearerToken: []
+      tags:
+        - TodoList
+      summary: Create a new todo list item
+      requestBody:
+        description: New item
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Item"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+
+  /item/{item_id}:
+    get:
+      operationId: getItem
+      security:
+        - bearerToken: []
+      tags:
+        - TodoList
+      parameters:
+        - in: path
+          name: item_id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+    put:
+      operationId: putItem
+      security:
+        - bearerToken: []
+      tags:
+        - TodoList
+      parameters:
+        - in: path
+          name: item_id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: Updated item
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Item"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+    delete:
+      operationId: deleteItem
+      security:
+        - bearerToken: []
+      tags:
+        - TodoList
+      parameters:
+        - in: path
+          name: item_id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+
+components:
+  securitySchemes:
+    bearerToken:
+      type: http
+      scheme:
+      bearerFormat: jwt
+  schemas:
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        done:
+          type: boolean
+      required:
+        - id
+        - title
+        - description
+        - done

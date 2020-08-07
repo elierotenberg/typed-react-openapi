@@ -1,0 +1,3 @@
+supportsES6: true
+npmName: "react-openapi-example"
+typescriptThreePlus: true

@@ -1,0 +1,9 @@
+{
+  "autorun": true,
+  "terminals": [
+    {
+      "name": "term",
+      "cwd": "[workspaceFolder]"
+    }
+  ]
+}

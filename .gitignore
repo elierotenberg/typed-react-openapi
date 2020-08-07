@@ -1,0 +1,5 @@
+/node_modules
+/build
+/typedoc
+*.tsbuildinfo
+/src/example/build
